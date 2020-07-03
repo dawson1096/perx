@@ -1,0 +1,39 @@
+<h2>List of Books</h2>
+<form [formGroup]="filterForm" (ngSubmit)="onSubmit()">
+  <label>Search: </label>
+  <input type="text" formControlName="searchValue" />
+  <label>Type: </label>
+  <select formControlName="filterType">
+    <option value="Hard cover">Hard Cover</option>
+    <option value="Soft cover">Soft Cover</option>
+  </select>
+  <button type="submit">Filter</button>
+</form>
+<br />
+<label for="sortBy">Sort By: </label>
+<select name="sortBy" #sortByProperty>
+  <option value="content">Title</option>
+  <option value="created_at">Created At</option>
+  <option value="updated_at">Updated At</option>
+</select>
+<button (click)="sort(sortByProperty.value)">Sort</button>
+<br />
+<br />
+<table>
+  <tr>
+    <th>Image</th>
+    <th>Title</th>
+    <th>Type</th>
+    <th>Cover Type</th>
+    <th>Created At</th>
+    <th>Updated At</th>
+  </tr>
+  <tr *ngFor="let data of datalist">
+    <td><img src="{{ data.attributes.display_properties.image }}" /></td>
+    <td>{{ data.attributes.content }}</td>
+    <td>{{ data.type | titlecase }}</td>
+    <td>{{ data.attributes.display_properties.type }}</td>
+    <td>{{ data.attributes.created_at | date: "short" }}</td>
+    <td>{{ data.attributes.updated_at | date: "short" }}</td>
+  </tr>
+</table>
